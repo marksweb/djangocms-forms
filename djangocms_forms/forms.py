@@ -87,6 +87,13 @@ class FormBuilder(forms.Form):
 
                 if isinstance(form_field, FormBuilderFileField):
                     self.file_fields.append(field_name)
+                    
+        try:
+            from captcha.fields import ReCaptchaField
+
+            self.fields['captcha'] = ReCaptchaField()
+        except ImportError:
+            pass
 
     def get_unique_field_name(self, field):
         field_name = '%s' % (slugify(unidecode(field.label)).replace('-', '_'))
