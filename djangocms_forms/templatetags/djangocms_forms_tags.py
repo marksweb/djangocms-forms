@@ -38,6 +38,16 @@ def is_file(field):
 
 
 @register.filter
+def is_recaptcha(field):
+    try:
+        from captcha.widgets import ReCaptcha
+
+        return isinstance(field.field.widget, ReCaptcha)
+    except ImportError:
+        return False
+
+
+@register.filter
 def is_required(field):
     return field.field.required
 
